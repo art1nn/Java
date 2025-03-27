@@ -69,7 +69,7 @@ public class Capital {
                 
             }
         }catch(NullPointerException e ){
-            System.out.println("ACABOU FILA DA PUTA");
+            System.out.println("ACABOU");
         }
 
     }
