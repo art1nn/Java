@@ -1,21 +1,87 @@
 package com.gerencia;
+import java.util.LinkedList;
 
 public class Capital {
     private String nome;
-    private float menor_distancia_atual;
-    private String anterior;
+    private Double menor_distancia_atual;
+    private Capital anterior;
     private boolean ativo;
-    private Vizinhos vizinhos; 
+    private Vizinhos vizinhos; // lista de VIZINHO, e VIZINHO é uma lista = [objeto, distancia]
 
     public Capital(String nome) {
         this.nome = nome;
-        this.menor_distancia_atual = Float.MAX_VALUE; 
+        this.menor_distancia_atual = Double.MAX_VALUE; 
         this.anterior = null;
         this.ativo = true;
         this.vizinhos = new Vizinhos(); 
     }
+    
 
-    // GetSet
+    public void Comparacao(Vizinho vizinho ){
+        if(this.menor_distancia_atual + vizinho.getDistancia() < vizinho.getCapital().getMenor_distancia_atual()){
+            vizinho.getCapital().setAnterior(this);
+            vizinho.getCapital().setMenor_distancia_atual(this.menor_distancia_atual + vizinho.getDistancia());
+        }
+    }
+
+    public static Capital retornar_menor(LinkedList<Capital> lista_capitais2 ){
+        Capital capital = new Capital("teste");
+        
+        for(Capital capital_comparacao : lista_capitais2){
+            if(capital_comparacao.getMenor_distancia_atual() < capital.getMenor_distancia_atual()){
+                capital = capital_comparacao;
+            }
+        }
+        return capital;
+    }
+
+    public void dijkstra(Capital destino){
+
+        LinkedList<Capital> lista_prioridade = new LinkedList<>();
+        lista_prioridade.add(this);
+        this.setMenor_distancia_atual(0.0);
+        
+        while (!lista_prioridade.isEmpty()) {
+            Capital capital = Capital.retornar_menor(lista_prioridade);
+            lista_prioridade.remove(capital);
+            capital.setAtivo(false);
+            if(capital == destino){
+                break;
+            }
+            
+            for(Vizinho vizinho : capital.getVizinhos().getListaVizinhos()){
+                if(vizinho.getCapital().getAtivo()== true){
+                    capital.Comparacao(vizinho);
+                    if(!lista_prioridade.contains(vizinho.getCapital())){
+                        lista_prioridade.add(vizinho.getCapital());
+                    }
+                    
+                }
+            }
+            
+        }
+
+        Capital capital_path = destino;
+        try{
+            while (capital_path != null) {
+                System.out.println(capital_path.getNome());
+                capital_path = capital_path.getAnterior();
+                
+            }
+        }catch(NullPointerException e ){
+            System.out.println("ACABOU FILA DA PUTA");
+        }
+
+    }
+
+
+
+
+//======================================================================================================
+//======================================================================================================
+//======================================================================================================
+
+//     GetSet
     public String getNome() {
         return nome;
     }
@@ -24,19 +90,19 @@ public class Capital {
         this.nome = nome;
     }
 
-    public float getMenor_distancia_atual() {
+    public Double getMenor_distancia_atual() {
         return menor_distancia_atual;
     }
 
-    public void setMenor_distancia_atual(float menor_distancia_atual) {
+    public void setMenor_distancia_atual(Double menor_distancia_atual) {
         this.menor_distancia_atual = menor_distancia_atual;
     }
 
-    public String getAnterior() {
+    public Capital getAnterior() {
         return anterior;
     }
 
-    public void setAnterior(String anterior) {
+    public void setAnterior(Capital anterior) {
         this.anterior = anterior;
     }
 

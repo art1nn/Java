@@ -1,19 +1,19 @@
 package com.gerencia;
 
 public class Vizinho {
-    private String capital;
-    private float distancia;
+    private Capital capital;
+    private Double distancia;
 
-    public Vizinho(String capital, float distancia) {
+    public Vizinho(Capital capital, Double distancia) {
         this.capital = capital;
         this.distancia = distancia;
     }
 
-    public String getCapital() {
+    public Capital getCapital() {
         return capital;
     }
 
-    public float getDistancia() {
+    public Double getDistancia() {
         return distancia;
     }
 
