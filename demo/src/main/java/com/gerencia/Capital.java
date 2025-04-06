@@ -1,7 +1,9 @@
 package com.gerencia;
 import java.util.LinkedList;
 
-public class Capital {
+import com.gerencia.utils.BinaryHeap;
+
+public class Capital implements Comparable<Capital>{
     private String nome;
     private Double menor_distancia_atual;
     private Capital anterior;
@@ -37,13 +39,13 @@ public class Capital {
 
     public void dijkstra(Capital destino){
 
-        LinkedList<Capital> lista_prioridade = new LinkedList<>();
-        lista_prioridade.add(this);
-        this.setMenor_distancia_atual(0.0);
-        
+        //LinkedList<Capital> lista_prioridade = new LinkedList<>();
+        BinaryHeap<Capital> lista_prioridade = new BinaryHeap<Capital>();
+        lista_prioridade.insert_node(this);
+        this.setMenor_distancia_atual(0.0);       
         while (!lista_prioridade.isEmpty()) {
-            Capital capital = Capital.retornar_menor(lista_prioridade);
-            lista_prioridade.remove(capital);
+            Capital capital = lista_prioridade.pop();
+
             capital.setAtivo(false);
             if(capital == destino){
                 break;
@@ -53,7 +55,7 @@ public class Capital {
                 if(vizinho.getCapital().getAtivo()== true){
                     capital.Comparacao(vizinho);
                     if(!lista_prioridade.contains(vizinho.getCapital())){
-                        lista_prioridade.add(vizinho.getCapital());
+                        lista_prioridade.insert_node(vizinho.getCapital());
                     }
                     
                 }
@@ -73,9 +75,6 @@ public class Capital {
         }
 
     }
-
-
-
 
 //======================================================================================================
 //======================================================================================================
@@ -116,5 +115,14 @@ public class Capital {
 
     public Vizinhos getVizinhos() {
         return vizinhos;
+    }
+
+    @Override
+    public int compareTo(Capital o) {
+        return Double.compare(this.menor_distancia_atual, o.menor_distancia_atual);
+    }
+    @Override
+    public String toString() {
+        return String.valueOf(menor_distancia_atual);
     }
 }
