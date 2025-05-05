@@ -1,6 +1,7 @@
 package com.gerencia;
 
 public class Vizinho {
+
     private Capital capital;
     private Double distancia;
 

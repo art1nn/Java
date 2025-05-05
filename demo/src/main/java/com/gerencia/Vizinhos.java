@@ -6,7 +6,7 @@ public class Vizinhos {
     private LinkedList<Vizinho> listaVizinhos = new LinkedList<>();
 
 
-    public void set_vizinho(Capital capital, Double distancia){
+    private void set_vizinho(Capital capital, Double distancia){
         this.listaVizinhos.add(new Vizinho(capital, distancia));
     }
 

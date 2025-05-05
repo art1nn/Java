@@ -1,85 +1,113 @@
 package com.gerencia;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+
 public class Main {
+
     public static void main(String[] args) {
-        Capital vitoria = new Capital("vitoria");
-        Capital salvador = new Capital("salvador");
-        Capital sao_paulo = new Capital("sao paulo");
-        Capital belo_horizonte = new Capital("belo horizonte");
-        Capital rio_de_janeiro = new Capital("rio de janeiro");
-        Capital fortaleza = new Capital("fortaleza");
-        Capital aracaju = new Capital("aracaju");
-        Capital recife = new Capital("recife");
-        Capital belem = new Capital("belem");
-        Capital sao_luis = new Capital("sao luis");
-        Capital teresina = new Capital("teresina");
-        Capital natal = new Capital("natal");
-        Capital brasilia = new Capital("brasilia");
-        Capital cuiaba = new Capital("cuiaba");
-        Capital goiania = new Capital("goiania");
-        Capital palmas = new Capital("palmas");
-        Capital porto_velho = new Capital("porto velho");
-        Capital manaus = new Capital("manaus");
-        Capital rio_branco = new Capital("rio branco");
-        Capital maceio = new Capital("maceio");
-        Capital joao_pessoa = new Capital("joao pessoa");
-        Capital curitiba = new Capital("curitiba");
-        Capital florianopolis = new Capital("florianopolis");
-        Capital porto_alegre = new Capital("porto alegre");
-        Capital campo_grande = new Capital("campo grande");
-        Capital boa_vista = new Capital("boa vista");
-        Capital macapa = new Capital("macapa");
 
-        // Definição dos vizinhos
-        vitoria.getVizinhos().settar_vizinho(vitoria, rio_de_janeiro, 2.0);
-        vitoria.getVizinhos().settar_vizinho(vitoria, belo_horizonte, 3.0);
-        vitoria.getVizinhos().settar_vizinho(vitoria, salvador, 4.0);
-        vitoria.getVizinhos().settar_vizinho(vitoria, curitiba, 10.0);
+        HashMap<String, Capital> tabela_hash_capitais = new HashMap<>();
+        String origem_string;
+        String destino_string;
+        Capital origem;
+        Capital destino;
+        Scanner scan = new Scanner(System.in);
 
-        salvador.getVizinhos().settar_vizinho(salvador, aracaju, 3.0);
-        salvador.getVizinhos().settar_vizinho(salvador, belo_horizonte, 5.0);
-        salvador.getVizinhos().settar_vizinho(salvador, teresina, 6.0);
+        List<String> nomesCapitais = Arrays.asList(
+            "vitoria", "salvador", "sao paulo", "belo horizonte", "rio de janeiro", "fortaleza",
+            "aracaju", "recife", "belem", "sao luis", "teresina", "natal", "brasilia", "cuiaba",
+            "goiania", "palmas", "porto velho", "manaus", "rio branco", "maceio", "joao pessoa",
+            "curitiba", "florianopolis", "porto alegre", "campo grande", "boa vista", "macapa"
+        );
 
-        brasilia.getVizinhos().settar_vizinho(brasilia, goiania, 1.0);
-        brasilia.getVizinhos().settar_vizinho(brasilia, cuiaba, 3.0);
-        brasilia.getVizinhos().settar_vizinho(brasilia, belo_horizonte, 4.0);
-        brasilia.getVizinhos().settar_vizinho(brasilia, salvador, 5.0);
+        for (String nome : nomesCapitais) {
+            adicionarCapital(tabela_hash_capitais, nome);
+        }
 
-        sao_luis.getVizinhos().settar_vizinho(sao_luis, belem, 3.0);
-        sao_luis.getVizinhos().settar_vizinho(sao_luis, teresina, 2.0);
+        Object[][] ligacoes = {
+            {"vitoria", "rio de janeiro", 413.0},
+            {"vitoria", "belo horizonte", 378.0},
+            {"rio de janeiro", "belo horizonte", 340.0},
+            {"sao paulo", "rio de janeiro", 357.0},
+            {"sao paulo", "belo horizonte", 490.0},
+            {"sao paulo", "goiania", 811.0},
+            {"cuiaba","goiania",745.0},
+            {"porto velho", "cuiaba", 1144.0},  
+            {"goiania","salvador",1241.0},
+            {"sao paulo","campo grande", 894.0},
+            {"vitoria", "salvador", 839.0},
+            {"campo grande", "curitiba", 777.0},
+            {"salvador", "aracaju", 277.0},
+            {"salvador", "belo horizonte", 965.0},
+            {"salvador", "teresina", 994.0},
+            {"brasilia", "goiania", 173.0},
+            {"brasilia", "cuiaba", 877.0},
+            {"brasilia", "belo horizonte", 620.0},
+            {"belo horizonte", "goiania", 666.0},
+            {"brasilia", "salvador", 1058.0},
+            {"sao luis", "belem", 482.0},
+            {"belem", "macapa", 330.0},
+            {"belem", "manaus", 1293.0},
+            {"sao luis", "teresina", 329.0},
+            {"fortaleza", "natal", 435.0},
+            {"natal", "joao pessoa", 152.0},
+            {"palmas", "sao luis", 959.0},
+            {"fortaleza", "teresina", 497.0},
+            {"fortaleza","recife", 630.0},
+            {"teresina", "belem", 750.0},
+            {"palmas","belem", 973.0},
+            {"teresina", "recife", 935.0},
+            {"recife", "joao pessoa", 104.0},
+            {"recife", "maceio", 202.0},
+            {"maceio", "aracaju", 201.0},
+            {"campo grande", "cuiaba", 560.0},
+            {"campo grande", "goiania", 705.0},
+            {"curitiba", "florianopolis", 251.0},
+            {"curitiba", "sao paulo", 339.0},
+            {"florianopolis", "porto alegre", 376.0}, 
+            {"porto velho", "rio branco", 484.0},
+            {"porto velho", "manaus", 760.0},
+            {"manaus", "boa vista", 750.0},
+            {"manaus", "rio branco", 1149.0},
+            {"palmas", "goiania", 725.0},
+            {"palmas", "belo horizonte", 1182.0},
+            {"palmas", "salvador", 1115.0},
+            {"palmas", "teresina", 831.0},
+            {"palmas", "brasilia", 700.0},
+            {"palmas", "cuiaba", 1035.0}
+        };
 
-        fortaleza.getVizinhos().settar_vizinho(fortaleza, natal, 2.5);
-        fortaleza.getVizinhos().settar_vizinho(fortaleza, sao_luis, 3.0);
-        fortaleza.getVizinhos().settar_vizinho(fortaleza, teresina, 2.0);
+        for (Object[] ligacao : ligacoes) {
+            ligarCapitais(tabela_hash_capitais, (String) ligacao[0], (String) ligacao[1], (double) ligacao[2]);
+        }
 
-        teresina.getVizinhos().settar_vizinho(teresina, belem, 4.0);
-        teresina.getVizinhos().settar_vizinho(teresina, recife, 5.0);
+        System.out.print("Origem: ");
+        origem_string = scan.nextLine();
 
-        recife.getVizinhos().settar_vizinho(recife, joao_pessoa, 1.5);
-        recife.getVizinhos().settar_vizinho(recife, maceio, 2.0);
+        System.out.print("Destino: ");
+        destino_string = scan.nextLine();
 
-        maceio.getVizinhos().settar_vizinho(maceio, aracaju, 2.0);
+        origem = tabela_hash_capitais.get(origem_string.toLowerCase());
+        destino = tabela_hash_capitais.get(destino_string.toLowerCase());
 
-        campo_grande.getVizinhos().settar_vizinho(campo_grande, cuiaba, 3.0);
-        campo_grande.getVizinhos().settar_vizinho(campo_grande, goiania, 4.0);
+        if((origem != null)&&(destino != null)){
+            origem.dijkstra(destino);
+        }else{
+            System.out.println("Digite o nome das capitais corretamente!");
+        }
+        scan.close();
+    }
 
-        curitiba.getVizinhos().settar_vizinho(curitiba, florianopolis, 2.0);
-        curitiba.getVizinhos().settar_vizinho(curitiba, sao_paulo, 3.0);
+    private static void adicionarCapital(HashMap<String, Capital> mapa, String nome) {
+        mapa.put(nome, new Capital(nome));
+    }
 
-        florianopolis.getVizinhos().settar_vizinho(florianopolis, porto_alegre, 3.0);
-
-        porto_velho.getVizinhos().settar_vizinho(porto_velho, rio_branco, 2.5);
-        porto_velho.getVizinhos().settar_vizinho(porto_velho, manaus, 3.5);
-
-        manaus.getVizinhos().settar_vizinho(manaus, boa_vista, 4.0);
-
-        boa_vista.getVizinhos().settar_vizinho(boa_vista, macapa, 5.0);
-        /* LinkedList<Vizinho> lista_vizinhos_es = vitoria.getVizinhos().getListaVizinhos();
-
-        for(Vizinho vizinho : lista_vizinhos_es){
-            System.out.println(vizinho.getCapital().getNome());
-        } */
-
-        sao_paulo.dijkstra(belem);
+    private static void ligarCapitais(HashMap<String, Capital> mapa, String origem, String destino, double distancia) {
+        Capital capOrigem = mapa.get(origem);
+        Capital capDestino = mapa.get(destino);
+        capOrigem.getVizinhos().settar_vizinho(capOrigem, capDestino, distancia);
     }
 }
